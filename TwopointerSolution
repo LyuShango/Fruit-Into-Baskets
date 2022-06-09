@@ -1,0 +1,38 @@
+class Solution {
+    public int totalFruit(int[] fruits) {
+        int former = -1, latter = -1, i = 0, ans = 0, cur = 0;
+        for (int j = 0; j < fruits.length; j++) {
+            
+            if (former == -1) {
+                former = fruits[j];
+                continue;
+            }
+            if (latter == -1 && fruits[j] != former) {
+                latter = fruits[j];
+                continue;
+            }
+            
+            if (fruits[j] == latter){
+                continue;
+            }
+            else if (fruits[j] == former && latter != -1) {
+                former = latter;
+                latter = fruits[j];
+            }
+            else if (fruits[j] == former && latter == -1) {
+                continue;
+            }
+            else {
+                cur = j - i;
+                ans = cur > ans ? cur : ans;
+                i = j;
+                while (fruits[i - 1] != former) {
+                    i--;
+                }
+                former = latter;
+                latter = fruits[j];
+            }
+        }
+        return ans > fruits.length - i ? ans : fruits.length - i;
+    }
+}
